@@ -2,18 +2,19 @@ using UnityEngine;
 
 public class unit : MonoBehaviour
 {
-    [SerializeField]int id = 0, isFusingCD = 100, size = 1;
+    [SerializeField] int id = 0, size = 1;
+    [SerializeField] float isFusingCD = 100;
     [SerializeField] GameObject nextTier;
 
 
     bool isFusing = false;
-    int isFusingTimer;
+    float isFusingTimer;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        isFusingTimer = isFusingCD;
+        ResetTimer();
     }
 
     // Update is called once per frame
@@ -21,7 +22,12 @@ public class unit : MonoBehaviour
     {
         if (isFusing) 
         {
-            //insert code to remove is fusing status after cd, in case of fusion failure
+            isFusingTimer -= Time.deltaTime;
+            if (isFusingTimer < 0)
+            {
+                isFusing = false;
+                ResetTimer();
+            }
         }
     }
 
@@ -43,7 +49,10 @@ public class unit : MonoBehaviour
             }
         }
     }
-
+    void ResetTimer()
+    {
+        isFusingTimer = isFusingCD;
+    }
     public int CheckBallId()
     {
         return id;
@@ -63,6 +72,8 @@ public class unit : MonoBehaviour
 
     private void StartFusion (GameObject otherUnitGameObject, unit otherUnitScript )
     {
+        SetBallIsFusing();
+        otherUnitScript.SetBallIsFusing();
         print($"initiating fusion between {id} and {otherUnitScript.CheckBallId()}");
         Vector3 midpoint = (transform.position + otherUnitGameObject.transform.position) / 2f;
         Instantiate(nextTier, midpoint, Quaternion.identity);
