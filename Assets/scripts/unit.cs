@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class unit : MonoBehaviour
@@ -5,6 +6,7 @@ public class unit : MonoBehaviour
     [SerializeField] int id = 0, size = 1;
     [SerializeField] float isFusingCD = 100;
     [SerializeField] GameObject nextTier;
+    [SerializeField] SpawnerScript spawner;
 
 
     bool isFusing = false;
@@ -41,7 +43,7 @@ public class unit : MonoBehaviour
             {
                 otherID = otherUnit.CheckBallId();
 
-                if (otherID < id && !CheckBallFusing() && !otherUnit.CheckBallFusing())
+                if (otherID < id && !CheckBallFusing() && !otherUnit.CheckBallFusing() && otherUnit.getSize() == size)
                 {
                     StartFusion(collision.gameObject, otherUnit);
                 }
@@ -67,18 +69,33 @@ public class unit : MonoBehaviour
     }
     private void OnDestroy()
     {
-        
+        print($"detroyed {id}");
+        //TODO send updated score
     }
+    public void setID(int newID)
+    {
+        id = newID;
+    }
+    public void setSpawner(SpawnerScript newSpawnerScript)
+    {
+        spawner = newSpawnerScript;
+    }
+    public int getSize()
+    { return size; }
 
-    private void StartFusion (GameObject otherUnitGameObject, unit otherUnitScript )
+    private void StartFusion(GameObject otherUnitGameObject, unit otherUnitScript)
     {
         SetBallIsFusing();
         otherUnitScript.SetBallIsFusing();
-        print($"initiating fusion between {id} and {otherUnitScript.CheckBallId()}");
         Vector3 midpoint = (transform.position + otherUnitGameObject.transform.position) / 2f;
-        Instantiate(nextTier, midpoint, Quaternion.identity);
+        if (nextTier != null) 
+        {
+            spawner.spawnNew(nextTier, midpoint, true);
+        }
+        Destroy(otherUnitGameObject);
+
+        Destroy(this.gameObject);
         
-        //TODO fuse objects
     }
 }
 
