@@ -1,29 +1,27 @@
 using System.Net;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class SpawnerScript : MonoBehaviour
 {
     InputAction clickAction;
     InputAction pointAction;
-    [SerializeField] GameObject TESTSPAWN;
+    [SerializeField] List<GameObject> SpawnableObjects;
+    [SerializeField] GameObject LeftLimit, RightLimit;
     Vector3 mousePosition;
-    int currentID = 1;
+    int currentID = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         clickAction = InputSystem.actions.FindAction("Click");
-        pointAction = InputSystem.actions.FindAction("Point");
         if (clickAction != null)
         {
            clickAction.Enable();
            clickAction.performed += OnClick;
         }
+        spawnNew(SpawnableObjects[0], mousePosition, false);
 
-        if (pointAction != null)
-        {
-            pointAction.Enable();
-        }
     }
 
     // Update is called once per frame
@@ -35,15 +33,18 @@ public class SpawnerScript : MonoBehaviour
 
     void OnDisable()
     {
-        clickAction.performed -= OnClick;
+        if (clickAction != null)
+        {
+            clickAction.performed -= OnClick;
+        }
     }
 
     public void OnClick(InputAction.CallbackContext context)
     {
+        GameObject ToSpawn = SpawnableObjects[0];
         Vector2 screenPos = pointAction.ReadValue<Vector2>();
         mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
-        print(mousePosition);
-        spawnNew(TESTSPAWN, mousePosition, false);
+        spawnNew(ToSpawn, mousePosition, false);
     }
 
     public void spawnNew(GameObject unitPrefab, Vector3 position, bool fromFusion) //cosa, dove, fusione/click
@@ -53,5 +54,16 @@ public class SpawnerScript : MonoBehaviour
         unit newunit = newSpawn.GetComponent<unit>();
         newunit.setID (currentID);
         newunit.setSpawner(this);
+        if (fromFusion)
+        {
+
+        }
+        else
+        {
+            if (LeftLimit != null && RightLimit != null)
+            {
+                newunit.SetLimit(RightLimit, LeftLimit);
+            }
+        }
     }
 }

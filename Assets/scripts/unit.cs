@@ -7,9 +7,9 @@ public class unit : MonoBehaviour
     [SerializeField] float isFusingCD = 100;
     [SerializeField] GameObject nextTier;
     [SerializeField] SpawnerScript spawner;
+    private GameObject LeftLimit, RightLimit;
 
-
-    bool isFusing = false;
+    bool isFusing = false, StartingStatic = false;
     float isFusingTimer;
 
 
@@ -96,6 +96,12 @@ public class unit : MonoBehaviour
 
         Destroy(this.gameObject);
         
+    }
+    public void SetLimit (GameObject Right, GameObject Left)
+    {
+        LeftLimit = Left;
+        RightLimit = Right;
+        StartingStatic = true;
     }
 }
 
