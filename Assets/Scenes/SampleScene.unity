@@ -163,7 +163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b57c8d9468b8f418d758054edd4974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerScript
-  TESTSPAWN: {fileID: 1165733021}
+  SpawnableObjects:
+  - {fileID: 1556146499474284120, guid: 061d2f1d1ed30834b87ba12247bd13af, type: 3}
+  LeftLimit: {fileID: 0}
+  RightLimit: {fileID: 0}
 --- !u!1 &432815921
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,11 +554,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1165733021 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1556146499474284120, guid: 061d2f1d1ed30834b87ba12247bd13af, type: 3}
-  m_PrefabInstance: {fileID: 951018969604462190}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1206011188
 GameObject:
   m_ObjectHideFlags: 0

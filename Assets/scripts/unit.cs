@@ -81,7 +81,17 @@ public class unit : MonoBehaviour
         spawner = newSpawnerScript;
     }
     public int getSize()
-    { return size; }
+    { 
+        return size; 
+    }
+    public void setFixed()
+    {
+
+        StartingStatic = true;
+        //TODO set in fixed position and kinestetic
+    }
+
+    
 
     private void StartFusion(GameObject otherUnitGameObject, unit otherUnitScript)
     {
@@ -101,7 +111,6 @@ public class unit : MonoBehaviour
     {
         LeftLimit = Left;
         RightLimit = Right;
-        StartingStatic = true;
     }
 }
 
