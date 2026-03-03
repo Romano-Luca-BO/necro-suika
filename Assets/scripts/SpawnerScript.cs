@@ -51,11 +51,17 @@ public class SpawnerScript : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        if (TimerSpawnCD <= 0 && lastSpawned.GetComponent<unit>().StartDrop())
+        if (/*TimerSpawnCD <= 0 &&*/ lastSpawned.GetComponent<unit>().StartDrop())
         {
             GameObject ToSpawn = SpawnableObjects[0];
             Vector2 screenPos = pointAction.ReadValue<Vector2>();
             mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
+
+            //                                                                                                       this is temporary
+            Vector2 pointertemp = new Vector2(mousePosition.x, LeftLimit.transform.position.y);
+            lastSpawned.transform.position = pointertemp;
+            //                                                                                                       this is temporary
+
             spawnNew(ToSpawn, mousePosition, false);
             TimerSpawnCD = SpawnCD;
         }
