@@ -1,4 +1,4 @@
-using System.Net;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
@@ -23,8 +23,8 @@ public class SpawnerScript : MonoBehaviour
 
         if (clickAction != null)
         {
-           clickAction.Enable();
-           clickAction.performed += OnClick;
+            clickAction.Enable();
+            clickAction.performed += OnClick;
         }
         if (pointAction != null)
         {
@@ -37,7 +37,7 @@ public class SpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TimerSpawnCD -=Time.deltaTime;
+        TimerSpawnCD -= Time.deltaTime;
     }
 
 
@@ -51,7 +51,8 @@ public class SpawnerScript : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        if (TimerSpawnCD <= 0){
+        if (TimerSpawnCD <= 0 && lastSpawned.GetComponent<unit>().StartDrop())
+        {
             GameObject ToSpawn = SpawnableObjects[0];
             Vector2 screenPos = pointAction.ReadValue<Vector2>();
             mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
@@ -65,9 +66,9 @@ public class SpawnerScript : MonoBehaviour
         currentID++;
         GameObject newSpawn = Instantiate(unitPrefab, position, Quaternion.identity);
         unit newunit = newSpawn.GetComponent<unit>();
-        newunit.setID (currentID);
+        newunit.setID(currentID);
         newunit.setSpawner(this);
-        lastSpawned = newSpawn;
+        
         if (!fromFusion)
         {
             if (LeftLimit != null && RightLimit != null)
@@ -75,6 +76,7 @@ public class SpawnerScript : MonoBehaviour
                 newunit.SetLimit(RightLimit, LeftLimit);
             }
             newunit.setFixed();
+            lastSpawned = newSpawn;
         }
     }
 }
