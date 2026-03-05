@@ -5,7 +5,7 @@ using UnityEngine;
 public class unit : MonoBehaviour
 {
     [SerializeField] int id = 0, size = 1;
-    [SerializeField] float isFusingCD = 100, minSize = 0.2f;
+    [SerializeField] float isFusingCD = 100, minSize = 0.2f, normalScale = 1;
     [SerializeField] GameObject nextTier;
     [SerializeField] SpawnerScript spawner;
     private GameObject LeftLimit, RightLimit;
@@ -20,14 +20,15 @@ public class unit : MonoBehaviour
     {
         RB = this.gameObject.GetComponent<Rigidbody2D>();
         this.gameObject.transform.localScale = new Vector3(minSize, minSize, minSize);
+        InPlay = LayerMask.NameToLayer("InPlay");
+        Fusion1 = LayerMask.NameToLayer("Fusion1");
+        Fusion2 = LayerMask.NameToLayer("Fusion2");
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ResetTimer();
-        InPlay = LayerMask.NameToLayer("InPlay");
-        Fusion1 = LayerMask.NameToLayer("Fusion1");
-        Fusion2 = LayerMask.NameToLayer("Fusion2");
+
     }
 
     // Update is called once per frame	
@@ -169,10 +170,10 @@ public class unit : MonoBehaviour
             if (isGrowing)
         {
             newScale += Time.deltaTime;
-            if (newScale >= 1)
+            if (newScale >= normalScale)
             {
                 isGrowing = false;
-                newScale = 1;
+                newScale = normalScale;
                 dropReady = true;
                 if (!StartingStatic)
                 {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4243553107028031783}
   - component: {fileID: 1548905518565069091}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Circle 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9433962, g: 0.7164471, b: 0.7164471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -170,8 +170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::unit
   id: 0
-  size: 1
+  size: 2
   isFusingCD: 1
   minSize: 0.2
-  nextTier: {fileID: 1556146499474284120, guid: c15278e66c1094046a6014069f0048fa, type: 3}
+  normalScale: 1.1
+  nextTier: {fileID: 1556146499474284120, guid: d2b5dbf5d852bfd41a812e9ce4f12910, type: 3}
   spawner: {fileID: 0}

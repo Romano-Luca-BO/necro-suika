@@ -73,6 +73,7 @@ public class SpawnerScript : MonoBehaviour
         GameObject newSpawn = Instantiate(unitPrefab, position, Quaternion.identity);
         unit newunit = newSpawn.GetComponent<unit>();
         newunit.setID(currentID);
+        newunit.setKinematic();
         newunit.setSpawner(this);
         
         if (!fromFusion)
