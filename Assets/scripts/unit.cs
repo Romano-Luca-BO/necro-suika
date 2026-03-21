@@ -5,7 +5,7 @@ using UnityEngine;
 public class unit : MonoBehaviour
 {
     [SerializeField] int id = 0, size = 1;
-    [SerializeField] float isFusingCD = 100, minSize = 0.2f, normalScale = 1;
+    [SerializeField] float isFusingCD = 100, minSize = 0.2f, normalScale = 1, scaleSpeed =1;
     [SerializeField] GameObject nextTier;
     [SerializeField] SpawnerScript spawner;
     private GameObject LeftLimit, RightLimit;
@@ -169,7 +169,7 @@ public class unit : MonoBehaviour
 
             if (isGrowing)
         {
-            newScale += Time.deltaTime;
+            newScale += Time.deltaTime*scaleSpeed*normalScale;
             if (newScale >= normalScale)
             {
                 isGrowing = false;
@@ -185,7 +185,7 @@ public class unit : MonoBehaviour
         }
         else if (isShrinking)
         {
-            newScale -= Time.deltaTime;
+            newScale -= Time.deltaTime * scaleSpeed * normalScale;
             if (newScale < minSize)
             {
                 Destroy(this.gameObject);
@@ -194,6 +194,10 @@ public class unit : MonoBehaviour
         }
 
         this.gameObject.transform.localScale = new Vector3(newScale, newScale, newScale);
+    }
+    public void setScaleSpeed(float sped)
+    {
+        scaleSpeed = sped;
     }
 
     public void SetLimit(GameObject Right, GameObject Left)

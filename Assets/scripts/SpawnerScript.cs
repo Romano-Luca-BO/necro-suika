@@ -11,7 +11,7 @@ public class SpawnerScript : MonoBehaviour
     [SerializeField] GameObject LeftLimit, RightLimit;
     Vector3 mousePosition;
     int currentID = 0;
-    [SerializeField] float SpawnCD = 1;
+    [SerializeField] float SpawnCD = 1, unitScaleSpeed = 1;
     float TimerSpawnCD;
     GameObject lastSpawned;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -75,6 +75,7 @@ public class SpawnerScript : MonoBehaviour
         newunit.setID(currentID);
         newunit.setKinematic();
         newunit.setSpawner(this);
+        newunit.setScaleSpeed(unitScaleSpeed);
         
         if (!fromFusion)
         {

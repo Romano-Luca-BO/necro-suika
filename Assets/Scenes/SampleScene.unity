@@ -168,6 +168,7 @@ MonoBehaviour:
   LeftLimit: {fileID: 544902137}
   RightLimit: {fileID: 919127018}
   SpawnCD: 1
+  unitScaleSpeed: 1
 --- !u!1 &432815921
 GameObject:
   m_ObjectHideFlags: 0
