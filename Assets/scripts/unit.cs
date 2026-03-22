@@ -13,6 +13,7 @@ public class unit : MonoBehaviour
     private int InPlay, Hanging, Fusion1, Fusion2;
     bool isFusing = false, StartingStatic = false, dropReady = false, isGrowing = true, isShrinking = false;
     float isFusingTimer;
+    Vector3 mousePosition;
 
 
 
@@ -28,6 +29,8 @@ public class unit : MonoBehaviour
     void Start()
     {
         ResetTimer();
+        spawner.UpdateScore(size);
+
 
     }
 
@@ -54,7 +57,8 @@ public class unit : MonoBehaviour
     {
         if (StartingStatic)
         {
-            Vector3 newpos = new Vector3(Mathf.Clamp(transform.position.x, LeftLimit.transform.position.x, RightLimit.transform.position.x), RightLimit.transform.position.y, transform.position.z);
+
+            Vector3 newpos = new Vector3(Mathf.Clamp(mousePosition.x, LeftLimit.transform.position.x, RightLimit.transform.position.x), RightLimit.transform.position.y, transform.position.z);
             transform.position = newpos;
         }
 
@@ -78,6 +82,10 @@ public class unit : MonoBehaviour
             }
         }
     }
+    public void setMousePosition(Vector3 newMousePos)
+    {
+        mousePosition = newMousePos;
+    }
     void ResetTimer()
     {
         isFusingTimer = isFusingCD;
@@ -96,8 +104,6 @@ public class unit : MonoBehaviour
     }
     private void OnDestroy()
     {
-        print($"detroyed {id}");
-        //TODO send updated score
     }
     public void setID(int newID)
     {
@@ -156,7 +162,11 @@ public class unit : MonoBehaviour
         setShrinking();
         otherUnitScript.setShrinking();
     }
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        spawner.GameOver();
+        Destroy(gameObject);
+    }
     public void setShrinking()
     {
         isGrowing = false;
@@ -202,7 +212,6 @@ public class unit : MonoBehaviour
 
     public void SetLimit(GameObject Right, GameObject Left)
     {
-        print("setlimit");
         LeftLimit = Left;
         RightLimit = Right;
     }

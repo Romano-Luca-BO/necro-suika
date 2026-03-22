@@ -2,24 +2,27 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 
 public class SpawnerScript : MonoBehaviour
 {
     InputAction clickAction;
     InputAction pointAction;
+    bool gameoverState = false;
     [SerializeField] List<GameObject> SpawnableObjects;
     [SerializeField] GameObject LeftLimit, RightLimit;
     Vector3 mousePosition;
-    int currentID = 0;
-    [SerializeField] float SpawnCD = 1, unitScaleSpeed = 1;
-    float TimerSpawnCD;
+    int currentID = 0, score = -1;
+    [SerializeField] float unitScaleSpeed = 1;
     GameObject lastSpawned;
+    unit lastSpawnedUnit;
+    [SerializeField] TMP_Text ScoreText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         clickAction = InputSystem.actions.FindAction("Click");
         pointAction = InputSystem.actions.FindAction("Point");
-        TimerSpawnCD = SpawnCD;
 
         if (clickAction != null)
         {
@@ -37,7 +40,12 @@ public class SpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TimerSpawnCD -= Time.deltaTime;
+        if (lastSpawned != null)
+        {
+            Vector2 screenPos = pointAction.ReadValue<Vector2>();
+            mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
+            lastSpawnedUnit.setMousePosition(mousePosition);
+        }
     }
 
 
@@ -51,19 +59,10 @@ public class SpawnerScript : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        if (/*TimerSpawnCD <= 0 &&*/ lastSpawned.GetComponent<unit>().StartDrop())
+        if (lastSpawnedUnit.StartDrop() && !gameoverState)
         {
             GameObject ToSpawn = SpawnableObjects[0];
-            Vector2 screenPos = pointAction.ReadValue<Vector2>();
-            mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
-
-            //                                                                                                       this is temporary
-            Vector2 pointertemp = new Vector2(mousePosition.x, LeftLimit.transform.position.y);
-            lastSpawned.transform.position = pointertemp;
-            //                                                                                                       this is temporary
-
             spawnNew(ToSpawn, mousePosition, false);
-            TimerSpawnCD = SpawnCD;
         }
     }
 
@@ -85,6 +84,16 @@ public class SpawnerScript : MonoBehaviour
             }
             newunit.setFixed();
             lastSpawned = newSpawn;
+            lastSpawnedUnit = newunit;
         }
+    }
+    public void GameOver()
+    {
+        gameoverState = true;
+    }
+    public void UpdateScore(int p)
+    {
+        score += p;
+        ScoreText.text = $"SCORE {score}";
     }
 }
