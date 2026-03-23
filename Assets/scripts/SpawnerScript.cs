@@ -1,9 +1,9 @@
 
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 using UnityEngine.UI;
-using TMPro;
 
 public class SpawnerScript : MonoBehaviour
 {
@@ -11,13 +11,14 @@ public class SpawnerScript : MonoBehaviour
     InputAction pointAction;
     bool gameoverState = false;
     [SerializeField] List<GameObject> SpawnableObjects;
-    [SerializeField] GameObject LeftLimit, RightLimit;
+    [SerializeField] GameObject LeftLimit, RightLimit, endgameCanvas;
     Vector3 mousePosition;
-    int currentID = 0, score = -1;
+    int currentID = 0, score = -1, maxscore = 0;
     [SerializeField] float unitScaleSpeed = 1;
     GameObject lastSpawned;
     unit lastSpawnedUnit;
-    [SerializeField] TMP_Text ScoreText;
+    [SerializeField] TMP_Text ScoreText, HighScore, EndScore, ScoreBeaten;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,7 +35,12 @@ public class SpawnerScript : MonoBehaviour
             pointAction.Enable();
         }
         spawnNew(SpawnableObjects[0], mousePosition, false);
+        maxscore = PlayerPrefs.GetInt("maxScore", 0);
 
+    }
+    public bool isOver()
+    {
+        return gameoverState;
     }
 
     // Update is called once per frame
@@ -59,7 +65,11 @@ public class SpawnerScript : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        if (lastSpawnedUnit.StartDrop() && !gameoverState)
+        if (isOver())
+        {
+            return;
+        }
+        if (lastSpawnedUnit.StartDrop())
         {
             GameObject ToSpawn = SpawnableObjects[0];
             spawnNew(ToSpawn, mousePosition, false);
@@ -90,10 +100,24 @@ public class SpawnerScript : MonoBehaviour
     public void GameOver()
     {
         gameoverState = true;
+        endgameCanvas.SetActive(true);
+        PlayerPrefs.SetInt("maxScore", maxscore);
+        PlayerPrefs.Save();
+        if (score == maxscore)
+        {
+            ScoreBeaten.gameObject.SetActive(true);
+        }
+        HighScore.text = maxscore.ToString();
+        EndScore.text = score.ToString();
+
     }
     public void UpdateScore(int p)
     {
         score += p;
+        if (score >= maxscore)
+        {
+            maxscore = score;
+        }
         ScoreText.text = $"SCORE {score}";
     }
 }
