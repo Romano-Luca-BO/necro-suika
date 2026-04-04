@@ -173,5 +173,8 @@ MonoBehaviour:
   size: 1
   isFusingCD: 1
   minSize: 0.2
+  normalScale: 0.5
+  scaleSpeed: 1
   nextTier: {fileID: 1556146499474284120, guid: c15278e66c1094046a6014069f0048fa, type: 3}
   spawner: {fileID: 0}
+  isFusing: 0

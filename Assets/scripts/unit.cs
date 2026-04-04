@@ -11,16 +11,17 @@ public class unit : MonoBehaviour
     private GameObject LeftLimit, RightLimit;
     private Rigidbody2D RB;
     private int InPlay, Hanging, Fusion1, Fusion2;
-    bool isFusing = false, StartingStatic = false, dropReady = false, isGrowing = true, isShrinking = false;
+    bool StartingStatic = false, dropReady = false, isGrowing = true, isShrinking = false;
     float isFusingTimer;
-    Vector3 mousePosition;
+    Vector3 mousePosition, fusionPoint, fusionStartingPoint;
+    [SerializeField] bool isFusing = false;
 
 
 
     void Awake()
     {
         RB = this.gameObject.GetComponent<Rigidbody2D>();
-        this.gameObject.transform.localScale = new Vector3(minSize, minSize, minSize);
+        this.gameObject.transform.localScale = new Vector3(minSize*normalScale, minSize*normalScale, minSize * normalScale);
         InPlay = LayerMask.NameToLayer("InPlay");
         Fusion1 = LayerMask.NameToLayer("Fusion1");
         Fusion2 = LayerMask.NameToLayer("Fusion2");
@@ -101,6 +102,8 @@ public class unit : MonoBehaviour
     public void SetBallIsFusing()
     {
         isFusing = true;
+        setKinematic();
+        setShrinking();
     }
     private void OnDestroy()
     {
@@ -150,17 +153,16 @@ public class unit : MonoBehaviour
     {
         SetBallIsFusing();
         otherUnitScript.SetBallIsFusing();
-        setKinematic();
-        otherUnitScript.setKinematic();
         this.gameObject.layer = Fusion1;
         otherUnitGameObject.layer = Fusion2;
-        Vector3 midpoint = (transform.position + otherUnitGameObject.transform.position) / 2f;
+        //Vector3 midpoint = (transform.position + otherUnitGameObject.transform.position) / 2f;
+        fusionPoint = (transform.position + otherUnitGameObject.transform.position) / 2f;
+        fusionStartingPoint = transform.position;
         if (nextTier != null)
         {
-            spawner.spawnNew(nextTier, midpoint, true);
+            spawner.spawnNew(nextTier, fusionPoint, true);
         }
-        setShrinking();
-        otherUnitScript.setShrinking();
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -207,7 +209,7 @@ public class unit : MonoBehaviour
     }
     public void setScaleSpeed(float sped)
     {
-        scaleSpeed = sped;
+        scaleSpeed = scaleSpeed*sped;
     }
 
     public void SetLimit(GameObject Right, GameObject Left)

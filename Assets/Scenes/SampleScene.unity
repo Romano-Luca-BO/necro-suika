@@ -377,10 +377,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerScript
   SpawnableObjects:
   - {fileID: 1556146499474284120, guid: 061d2f1d1ed30834b87ba12247bd13af, type: 3}
+  - {fileID: 1556146499474284120, guid: c15278e66c1094046a6014069f0048fa, type: 3}
+  - {fileID: 1556146499474284120, guid: d2b5dbf5d852bfd41a812e9ce4f12910, type: 3}
+  - {fileID: 1556146499474284120, guid: ca5ebe777877b514aa71be3a20acc406, type: 3}
+  - {fileID: 1556146499474284120, guid: 85ca1fadbe3469549be871ae9272733f, type: 3}
+  - {fileID: 1556146499474284120, guid: 87340f0dbea055e4787e1f42c2131fe1, type: 3}
+  - {fileID: 1556146499474284120, guid: 4b5c39c6ed51aa846b229d85a11d6f9a, type: 3}
+  - {fileID: 1556146499474284120, guid: 59f5bdc58adc56d49a7d4f74d5c06a8e, type: 3}
+  - {fileID: 1556146499474284120, guid: 89ff645e5107e154fb7628116525be55, type: 3}
+  - {fileID: 1556146499474284120, guid: 341e51f6f0109e544a99b72d6a17c898, type: 3}
+  - {fileID: 1556146499474284120, guid: 788f64e69c0a66a40b0396de4e334c98, type: 3}
   LeftLimit: {fileID: 544902137}
   RightLimit: {fileID: 919127018}
   endgameCanvas: {fileID: 1870967511}
-  unitScaleSpeed: 1
+  unitScaleSpeed: 5
   ScoreText: {fileID: 1434608635}
   HighScore: {fileID: 1587263213}
   EndScore: {fileID: 470321889}

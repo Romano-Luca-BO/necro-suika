@@ -13,7 +13,7 @@ public class SpawnerScript : MonoBehaviour
     [SerializeField] List<GameObject> SpawnableObjects;
     [SerializeField] GameObject LeftLimit, RightLimit, endgameCanvas;
     Vector3 mousePosition;
-    int currentID = 0, score = -1, maxscore = 0;
+    int currentID = 0, score = -1, maxscore = 0, toSpawn = 0;
     [SerializeField] float unitScaleSpeed = 1;
     GameObject lastSpawned;
     unit lastSpawnedUnit;
@@ -34,7 +34,9 @@ public class SpawnerScript : MonoBehaviour
         {
             pointAction.Enable();
         }
-        spawnNew(SpawnableObjects[0], mousePosition, false);
+
+
+            spawnNew(SpawnableObjects[toSpawn], mousePosition, false);
         maxscore = PlayerPrefs.GetInt("maxScore", 0);
 
     }
@@ -71,8 +73,25 @@ public class SpawnerScript : MonoBehaviour
         }
         if (lastSpawnedUnit.StartDrop())
         {
-            GameObject ToSpawn = SpawnableObjects[0];
-            spawnNew(ToSpawn, mousePosition, false);
+            if (currentID % 7 == 0)
+            {
+                toSpawn = 3;
+            }
+            else if (currentID % 5 == 0)
+            {
+                toSpawn = 2;
+            }
+            else if (currentID % 3 == 0)
+            {
+                toSpawn = 1;
+            }
+            else
+            {
+                toSpawn = 0;
+            }
+            //GameObject ToSpawn = SpawnableObjects[0];
+            //spawnNew(ToSpawn, mousePosition, false);
+            spawnNew(SpawnableObjects[toSpawn], mousePosition, false);
         }
     }
 
