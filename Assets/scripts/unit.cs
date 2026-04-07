@@ -77,7 +77,6 @@ public class unit : MonoBehaviour
                 if (otherID < id && !CheckBallFusing() && !otherUnit.CheckBallFusing() && otherUnit.getSize() == size)
                 {
                     StartFusion(collision.gameObject, otherUnit);
-
                 }
 
             }
@@ -132,9 +131,12 @@ public class unit : MonoBehaviour
     {
         if (dropReady)
         {
-            setDynamic();
             StartingStatic = false;
-            
+            mousePosition = spawner.getMousePosition();
+            Vector3 newpos = new Vector3(Mathf.Clamp(mousePosition.x, LeftLimit.transform.position.x, RightLimit.transform.position.x), RightLimit.transform.position.y, transform.position.z); // TODO webgl always return destkop, so it's unreliable for input type. find something that is not this workarround 
+            transform.position = newpos;
+            setDynamic();
+
         }
         return dropReady;
     }
@@ -166,8 +168,11 @@ public class unit : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        spawner.GameOver();
-        Destroy(gameObject);
+        if (collision.tag == "DeathTrigger")
+        {
+            spawner.GameOver();
+            Destroy(gameObject);
+        }
     }
     public void setShrinking()
     {

@@ -390,7 +390,7 @@ MonoBehaviour:
   LeftLimit: {fileID: 544902137}
   RightLimit: {fileID: 919127018}
   endgameCanvas: {fileID: 1870967511}
-  unitScaleSpeed: 5
+  unitScaleSpeed: 2
   ScoreText: {fileID: 1434608635}
   HighScore: {fileID: 1587263213}
   EndScore: {fileID: 470321889}
@@ -1193,7 +1193,7 @@ GameObject:
   - component: {fileID: 1111870167}
   m_Layer: 0
   m_Name: DeathTrigger
-  m_TagString: Untagged
+  m_TagString: DeathTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1386,7 +1386,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -966.678}
+  m_AnchoredPosition: {x: 0, y: -940}
   m_SizeDelta: {x: 1662.4568, y: 147.9324}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1434608635
@@ -1436,10 +1436,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 72
   m_fontSizeBase: 60
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -2610,7 +2610,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 3700, y: 2000}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

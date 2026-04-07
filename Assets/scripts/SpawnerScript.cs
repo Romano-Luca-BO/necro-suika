@@ -28,7 +28,14 @@ public class SpawnerScript : MonoBehaviour
         if (clickAction != null)
         {
             clickAction.Enable();
-            clickAction.performed += OnClick;
+            if (!Application.isMobilePlatform)
+            {
+                clickAction.performed += OnClick;
+            }
+            else
+            {
+                clickAction.canceled += OnClick;
+            }
         }
         if (pointAction != null)
         {
@@ -56,12 +63,24 @@ public class SpawnerScript : MonoBehaviour
         }
     }
 
-
+    public Vector3 getMousePosition()
+    {
+        Vector2 screenPos = pointAction.ReadValue<Vector2>();
+        mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
+        return mousePosition;
+    }
     void OnDisable()
     {
         if (clickAction != null)
         {
-            clickAction.performed -= OnClick;
+            if (!Application.isMobilePlatform)
+            { 
+                clickAction.performed -= OnClick;
+            }
+            else
+            {
+                clickAction.canceled -= OnClick;
+            }
         }
     }
 
