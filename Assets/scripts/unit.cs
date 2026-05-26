@@ -25,6 +25,7 @@ public class unit : MonoBehaviour
         InPlay = LayerMask.NameToLayer("InPlay");
         Fusion1 = LayerMask.NameToLayer("Fusion1");
         Fusion2 = LayerMask.NameToLayer("Fusion2");
+        RB.useFullKinematicContacts = true;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -64,9 +65,40 @@ public class unit : MonoBehaviour
         }
 
     }
+
+    private void wallevade(Collision2D collision)
+    {
+        Collider2D thisCollider = collision.otherCollider, otherCollider = collision.collider;
+        ColliderDistance2D d = thisCollider.Distance(otherCollider);
+        Vector2 correction = d.normal * d.distance;
+        correction = new Vector2(correction.x, correction.y);
+        print($"{RB.position} {RB.position += correction}");
+        //Vector3 vector3 = new Vector3(correction.x, correction.y, 0);
+        RB.position += correction;
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic)
+        {
+            wallevade(collision);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic)
+        {
+            wallevade(collision);
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        print("ci entra1111");
         int otherID = -1;
+        if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic)
+        {
+            wallevade(collision);
+        }
         if (collision != null)
         {
             var otherUnit = collision.gameObject.GetComponent<unit>();
