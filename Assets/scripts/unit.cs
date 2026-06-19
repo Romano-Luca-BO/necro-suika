@@ -72,7 +72,6 @@ public class unit : MonoBehaviour
         ColliderDistance2D d = thisCollider.Distance(otherCollider);
         Vector2 correction = d.normal * d.distance;
         correction = new Vector2(correction.x, correction.y);
-        print($"{RB.position} {RB.position += correction}");
         //Vector3 vector3 = new Vector3(correction.x, correction.y, 0);
         RB.position += correction;
     }
@@ -88,12 +87,11 @@ public class unit : MonoBehaviour
     {
         if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic)
         {
-            wallevade(collision);
+            //wallevade(collision);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print("ci entra1111");
         int otherID = -1;
         if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic)
         {
@@ -165,7 +163,7 @@ public class unit : MonoBehaviour
         {
             StartingStatic = false;
             mousePosition = spawner.getMousePosition();
-            Vector3 newpos = new Vector3(Mathf.Clamp(mousePosition.x, LeftLimit.transform.position.x, RightLimit.transform.position.x), RightLimit.transform.position.y, transform.position.z); // TODO webgl always return destkop, so it's unreliable for input type. find something that is not this workarround 
+            Vector3 newpos = new Vector3(Mathf.Clamp(mousePosition.x, LeftLimit.transform.position.x, RightLimit.transform.position.x), RightLimit.transform.position.y, transform.position.z); 
             transform.position = newpos;
             setDynamic();
 
@@ -246,7 +244,7 @@ public class unit : MonoBehaviour
     }
     public void setScaleSpeed(float sped)
     {
-        scaleSpeed = scaleSpeed*sped;
+        scaleSpeed = sped;
     }
 
     public void SetLimit(GameObject Right, GameObject Left)
