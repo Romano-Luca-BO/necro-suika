@@ -71,7 +71,6 @@ public class unit : MonoBehaviour
 
     private void wallevade(Collision2D collision)
     {
-        print("wallevade");
         Collider2D thisCollider = collision.otherCollider, otherCollider = collision.collider;
         ColliderDistance2D d = thisCollider.Distance(otherCollider);
         Vector2 correction = d.normal * d.distance;
@@ -220,7 +219,7 @@ public class unit : MonoBehaviour
 
             if (isGrowing)
         {
-            newScale += Time.deltaTime*scaleSpeed*normalScale*2;
+            newScale += Time.deltaTime*scaleSpeed*normalScale;
             if (newScale >= normalScale)
             {
                 isGrowing = false;
@@ -236,7 +235,7 @@ public class unit : MonoBehaviour
         }
         else if (isShrinking)
         {
-            newScale -= Time.deltaTime * scaleSpeed * normalScale;
+            newScale -= Time.deltaTime * scaleSpeed * normalScale*2;
             if (newScale < minSize)
             {
                 Destroy(this.gameObject);
