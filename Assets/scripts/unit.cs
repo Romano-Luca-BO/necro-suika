@@ -35,9 +35,7 @@ public class unit : MonoBehaviour
 
 
     }
-
-    // Update is called once per frame	
-    void Update()
+    private void FixedUpdate()
     {
         if (isFusing)
         {
@@ -52,7 +50,12 @@ public class unit : MonoBehaviour
         {
             setScale();
 
-            }
+        }
+    }
+    // Update is called once per frame	
+    void Update()
+    {
+
     }
 
     void LateUpdate()
