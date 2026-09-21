@@ -14,7 +14,7 @@ public class SpawnerScript : MonoBehaviour
     [SerializeField] GameObject LeftLimit, RightLimit, endgameCanvas;
     Vector3 mousePosition;
     int currentID = 0, score = -1, maxscore = 0, toSpawn = 0;
-    [SerializeField] float unitScaleSpeed = 1;
+    [SerializeField, Tooltip("Unit shrink speed must be bigger than grow speed")] float unitScaleSpeed = 1, unitShrinkSpeed = 1, unitGrowSpeed = 1;
     GameObject lastSpawned;
     unit lastSpawnedUnit;
     [SerializeField] TMP_Text ScoreText, HighScore, EndScore, ScoreBeaten;
@@ -122,7 +122,7 @@ public class SpawnerScript : MonoBehaviour
         newunit.setID(currentID);
         newunit.setKinematic();
         newunit.setSpawner(this);
-        newunit.setScaleSpeed(unitScaleSpeed);
+        newunit.setScaleSpeed(unitScaleSpeed, unitShrinkSpeed, unitGrowSpeed);
         
         if (!fromFusion)
         {

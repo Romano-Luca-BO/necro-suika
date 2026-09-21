@@ -391,6 +391,8 @@ MonoBehaviour:
   RightLimit: {fileID: 919127018}
   endgameCanvas: {fileID: 1870967511}
   unitScaleSpeed: 2
+  unitShrinkSpeed: 1.2
+  unitGrowSpeed: 1
   ScoreText: {fileID: 1434608635}
   HighScore: {fileID: 1587263213}
   EndScore: {fileID: 470321889}

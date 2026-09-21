@@ -12,7 +12,7 @@ public class unit : MonoBehaviour
     private Rigidbody2D RB;
     private int InPlay, Hanging, Fusion1, Fusion2;
     bool StartingStatic = false, dropReady = false, isGrowing = true, isShrinking = false;
-    float isFusingTimer;
+    float isFusingTimer, shrinkSpeed, growSpeed;
     Vector3 mousePosition, fusionPoint, fusionStartingPoint;
     [SerializeField] bool isFusing = false;
 
@@ -53,10 +53,7 @@ public class unit : MonoBehaviour
         }
     }
     // Update is called once per frame	
-    void Update()
-    {
 
-    }
 
     void LateUpdate()
     {
@@ -219,7 +216,7 @@ public class unit : MonoBehaviour
 
             if (isGrowing)
         {
-            newScale += Time.deltaTime*scaleSpeed*normalScale;
+            newScale += Time.deltaTime*scaleSpeed*normalScale*growSpeed;
             if (newScale >= normalScale)
             {
                 isGrowing = false;
@@ -235,7 +232,7 @@ public class unit : MonoBehaviour
         }
         else if (isShrinking)
         {
-            newScale -= Time.deltaTime * scaleSpeed * normalScale*2;
+            newScale -= Time.deltaTime * scaleSpeed * normalScale*shrinkSpeed;
             if (newScale < minSize)
             {
                 Destroy(this.gameObject);
@@ -245,9 +242,11 @@ public class unit : MonoBehaviour
 
         this.gameObject.transform.localScale = new Vector3(newScale, newScale, newScale);
     }
-    public void setScaleSpeed(float sped)
+    public void setScaleSpeed(float sped,float shrink, float grow )
     {
         scaleSpeed = sped;
+        shrinkSpeed = shrink;
+        growSpeed = grow;
     }
 
     public void SetLimit(GameObject Right, GameObject Left)
