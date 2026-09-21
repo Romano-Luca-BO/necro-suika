@@ -71,6 +71,7 @@ public class unit : MonoBehaviour
 
     private void wallevade(Collision2D collision)
     {
+        print("wallevade");
         Collider2D thisCollider = collision.otherCollider, otherCollider = collision.collider;
         ColliderDistance2D d = thisCollider.Distance(otherCollider);
         Vector2 correction = d.normal * d.distance;
@@ -80,7 +81,7 @@ public class unit : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic)
+        if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic && isGrowing)
         {
             wallevade(collision);
         }
@@ -96,7 +97,7 @@ public class unit : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         int otherID = -1;
-        if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic)
+        if (collision.gameObject.tag == "Wall" && RB.bodyType == RigidbodyType2D.Kinematic && isGrowing)
         {
             wallevade(collision);
         }
@@ -219,7 +220,7 @@ public class unit : MonoBehaviour
 
             if (isGrowing)
         {
-            newScale += Time.deltaTime*scaleSpeed*normalScale;
+            newScale += Time.deltaTime*scaleSpeed*normalScale*2;
             if (newScale >= normalScale)
             {
                 isGrowing = false;
