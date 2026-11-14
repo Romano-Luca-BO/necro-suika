@@ -9,7 +9,7 @@ public class SpawnerScript : MonoBehaviour
 {
     InputAction clickAction;
     InputAction pointAction;
-    bool gameoverState = false;
+    bool pause = false;
     [SerializeField] List<GameObject> SpawnableObjects;
     [SerializeField] GameObject LeftLimit, RightLimit, endgameCanvas;
     Vector3 mousePosition;
@@ -47,9 +47,9 @@ public class SpawnerScript : MonoBehaviour
         maxscore = PlayerPrefs.GetInt("maxScore", 0);
 
     }
-    public bool isOver()
+    public bool isPaused()
     {
-        return gameoverState;
+        return pause;
     }
 
     // Update is called once per frame
@@ -86,7 +86,7 @@ public class SpawnerScript : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        if (isOver())
+        if (isPaused())
         {
             return;
         }
@@ -137,17 +137,19 @@ public class SpawnerScript : MonoBehaviour
     }
     public void GameOver()
     {
-        gameoverState = true;
-        endgameCanvas.SetActive(true);
-        PlayerPrefs.SetInt("maxScore", maxscore);
-        PlayerPrefs.Save();
-        if (score == maxscore)
+        if (pause == false)
         {
-            ScoreBeaten.gameObject.SetActive(true);
+            pause = true;
+            endgameCanvas.SetActive(true);
+            PlayerPrefs.SetInt("maxScore", maxscore);
+            PlayerPrefs.Save();
+            if (score == maxscore)
+            {
+                ScoreBeaten.gameObject.SetActive(true);
+            }
+            HighScore.text = maxscore.ToString();
+            EndScore.text = score.ToString();
         }
-        HighScore.text = maxscore.ToString();
-        EndScore.text = score.ToString();
-
     }
     public void UpdateScore(int p)
     {
