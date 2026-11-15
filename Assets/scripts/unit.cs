@@ -5,7 +5,7 @@ using UnityEngine;
 public class unit : MonoBehaviour
 {
     [SerializeField] int id = 0, size = 1;
-    [SerializeField] float isFusingCD = 100, minSize = 0.2f, normalScale = 1, scaleSpeed =1;
+    [SerializeField] float isFusingCD = 100, minSize = 0.2f, normalScale = 1, scaleSpeed =1, minCorrectionValue= -0.5f;
     [SerializeField] GameObject nextTier;
     [SerializeField] SpawnerScript spawner;
     private GameObject LeftLimit, RightLimit;
@@ -79,8 +79,12 @@ public class unit : MonoBehaviour
         }
         Collider2D thisCollider = collision.otherCollider, otherCollider = collision.collider;
         ColliderDistance2D d = thisCollider.Distance(otherCollider);
-        Vector2 correction = d.normal * d.distance * correctionMultiplier;
-        correction = new Vector2(correction.x, correction.y);
+        Vector2 correction = Vector2.zero;
+        if(d.isOverlapped && d.distance < minCorrectionValue)
+        {
+            correction = d.normal * d.distance * correctionMultiplier;
+        }
+
         //Vector3 vector3 = new Vector3(correction.x, correction.y, 0);
         RB.position += correction;
     }
