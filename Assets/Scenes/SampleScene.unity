@@ -1270,7 +1270,7 @@ GameObject:
   - component: {fileID: 1082037402}
   - component: {fileID: 1082037404}
   m_Layer: 5
-  m_Name: bg (3)
+  m_Name: Fog Fast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1494,7 +1494,7 @@ GameObject:
   - component: {fileID: 1172002394}
   - component: {fileID: 1172002393}
   m_Layer: 5
-  m_Name: bg (2)
+  m_Name: Fog slow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
